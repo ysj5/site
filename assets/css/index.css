@@ -15,7 +15,8 @@
 }
 
 .explain {
-  width: 480px;
+  width: 80vw;
+  max-width: 500px;
   margin: 40px auto 0;
 }
 .up {
