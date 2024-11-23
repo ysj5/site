@@ -1,0 +1,67 @@
+.container {
+  margin: 0 auto;
+  padding-top: 20px;
+  background-color: black;
+  color: white;
+  font-family: '楷体';
+}
+.gua {
+  width: 300px;
+  margin: 0 auto 20px;
+}
+.gua .row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.explain {
+  width: 480px;
+  margin: 40px auto 0;
+}
+.up {
+  font-size: 40px;
+  color: #f14c54;
+}
+
+.down {
+  display: flex;
+  gap: 70px;
+}
+
+.left {
+  padding-top: 44px;
+  width: 60px;
+  flex-shrink: 0;
+}
+
+.right {
+  flex: 1;
+}
+
+.right .five {
+  font-size: 30px;
+  color: #f6ecae;
+}
+
+.right .sketch {
+  font-size: 18px;
+}
+
+.right .god {
+  color: #95e4ea;
+}
+
+.right div {
+  margin-bottom: 10px;
+}
+
+@media screen and (min-width: 1024px) {
+  .container {
+    width: 1024px;
+  }
+}
+@media screen and (max-width: 1023px) {
+  .container {
+    width: 100%;
+  }
+}

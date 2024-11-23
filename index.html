@@ -1,3 +1,86 @@
-<!DOCTYPE html><html><head><title>友邦</title><meta charset=utf-8><meta name=description content="A Quasar Project"><meta name=format-detection content="telephone=no"><meta name=msapplication-tap-highlight content=no><meta name=viewport content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width"><link rel=icon type=image/png sizes=128x128 href="/icons/favicon-128x128.png"><link rel=icon type=image/png sizes=96x96 href="/icons/favicon-96x96.png"><link rel=icon type=image/png sizes=32x32 href="/icons/favicon-32x32.png"><link rel=icon type=image/png sizes=16x16 href="/icons/favicon-16x16.png"><link rel=icon type=image/ico href="/favicon.ico">  <script type="module" crossorigin src="/assets/index.f84e54a6.js"></script>
-  <link rel="stylesheet" href="/assets/index.e07fe96c.css">
-</head><body><div id=q-app></div></body></html>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>个人网站</title>
+    <meta charset="utf-8" />
+    <meta name="description" content="A Quasar Project" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta
+      name="viewport"
+      content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width"
+    />
+    <link rel=icon type=image/png sizes=128x128
+    href="/icons/favicon-128x128.png"> <link rel=icon type=image/png sizes=96x96
+    href="/icons/favicon-96x96.png"> <link rel=icon type=image/png sizes=32x32
+    href="/icons/favicon-32x32.png"> <link rel=icon type=image/png sizes=16x16
+    href="/icons/favicon-16x16.png"> <link rel=icon type=image/ico
+    href="/favicon.ico">
+    <link rel="stylesheet" href="/assets/css/index.css" />
+  </head>
+
+  <body>
+    <main class="container">
+      <div class="rule">
+        <section class="gua">
+          <div class="row">
+            <div class="col">2.留连-木</div>
+            <div class="col">3.速喜-火</div>
+            <div class="col">7.病符-土</div>
+          </div>
+          <div class="row">
+            <div class="col">1.大安-木</div>
+            <div class="col">6.空亡-土</div>
+            <div class="col">4.赤口-金</div>
+          </div>
+          <div class="row">
+            <div class="col">8.桃花-土</div>
+            <div class="col">5.小吉-水</div>
+            <div class="col">9.天德-金</div>
+          </div>
+        </section>
+        <section class="explain">
+          <!-- <div class="item">
+            <aside class="up"></aside>
+            <aside class="down">
+              <div class="left"></div>
+              <div class="right">
+                <div class="five"></div>
+                <div class="sketch"></div>
+                <div class="god"></div>
+                <p class="des"></p>
+              </div>
+            </aside>
+          </div> -->
+        </section>
+      </div>
+    </main>
+
+    <script>
+      const explainEl = document.querySelector(".explain");
+      fetch("./assets/data.json")
+        .then((response) => response.json())
+        .then((data) => {
+          const fragment = document.createDocumentFragment();
+          data.forEach((item) => {
+            const itemEl = document.createElement("div");
+            itemEl.classList.add("item");
+            itemEl.innerHTML = `
+              <aside class="up">${item.name}</aside>
+              <aside class="down">
+                <div class="left">${item.generalize}</div>
+                <div class="right">
+                  <div class="five">${item.fiveXing}</div>
+                  <div class="sketch">${item.sketch}</div>
+                  <div class="god">${item.god}</div>
+                  <p class="des">${item.explain}</p>
+                </div>
+              </aside>
+            `;
+            fragment.appendChild(itemEl);
+          });
+          explainEl.appendChild(fragment);
+        });
+    </script>
+  </body>
+</html>
