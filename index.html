@@ -39,6 +39,24 @@
             <div class="col">9.天德-金</div>
           </div>
         </section>
+        <section class="time">
+          <p>子时23～1点</p>
+          <p>丑时1～3点</p>
+          <p>寅时3～5点</p>
+          <p>卯时5～7点</p>
+          <p>辰时7～9点</p>
+          <p>巳时9～11点</p>
+          <p>午时11～13点</p>
+          <p>未时13～15点</p>
+          <p>申时15～17点</p>
+          <p>酉时17～19点</p>
+          <p>戌时19～21点</p>
+          <p>亥时21～23点</p>
+          <div class="calc">
+            <input type="text" placeholder="输入三个数计算（空格分割）" class="calcInput">
+            <button class="calcBtn">计算</button>
+          </div>
+        </section>
         <section class="explain">
           <!-- <div class="item">
             <aside class="up"></aside>
@@ -81,6 +99,48 @@
           });
           explainEl.appendChild(fragment);
         });
+
+      const calcBtn = document.querySelector(".calcBtn");
+      const calcInput = document.querySelector(".calcInput");
+      const arr = [
+        '大安（木）',
+        '留连（木）',
+        '速喜（火）',
+        '赤口（金）',
+        '小吉（水）',
+        '空亡（土）',
+        '病符（土）',
+        '桃花（土）',
+        '天德（金）',
+      ]
+      function calc() {
+        const nums = calcInput.value.split(" ").map(Number);
+        if(nums.length !== 3) {
+          alert("请输入三个数字！");
+          return;
+        }
+        const len = arr.length;
+        const firstIndex = nums[0] % len - 1;
+        const firstChar = arr[firstIndex];
+        const secondIndex = (firstIndex + nums[1] % len) % len - 1;
+        const secondChar = arr[secondIndex];
+        console.log(secondIndex, secondChar)
+        const thirdIndex = (secondIndex + nums[2] % len) % len - 1;
+        const thirdChar = arr[thirdIndex];
+        const result = `${firstChar} -> ${secondChar} -> ${thirdChar}`;
+        const divEl = document.querySelector('.result') || document.createElement("div");
+        divEl.classList.add("result");
+        divEl.textContent = result;
+        calcBtn.after(divEl);
+      }
+      calcBtn.addEventListener("click", () => {
+        calc();
+      });
+      calcInput.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter' || e.keyCode === 13) {
+          calc();
+        }
+      })
     </script>
   </body>
 </html>

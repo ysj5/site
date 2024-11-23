@@ -5,9 +5,12 @@
   color: white;
   font-family: '楷体';
 }
-.gua {
+.gua, .time {
   width: 300px;
   margin: 0 auto 20px;
+}
+.time {
+  text-align: center;
 }
 .gua .row {
   display: flex;
