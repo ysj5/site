@@ -22,6 +22,7 @@
   <body>
     <main class="container">
       <div class="rule">
+        <h1>小六壬</h1>
         <section class="gua">
           <div class="row">
             <div class="col">2.留连-木</div>
@@ -52,9 +53,15 @@
           <p>酉时17～19点</p>
           <p>戌时19～21点</p>
           <p>亥时21～23点</p>
+          <div class="curTime">
+            <p class="curTimeNum"></p>
+            <button class="calcBtn useCurTime">使用当前时间</button>
+          </div>
           <div class="calc">
-            <input type="text" placeholder="输入三个数计算（空格分割）" class="calcInput">
-            <button class="calcBtn">计算</button>
+            <div class="action">
+              <input type="text" placeholder="输入三个数计算（空格分割）" class="calcInput">
+              <button class="calcBtn calcGuaXiang">计算</button>
+            </div>
           </div>
         </section>
         <section class="explain">
@@ -100,7 +107,7 @@
           explainEl.appendChild(fragment);
         });
 
-      const calcBtn = document.querySelector(".calcBtn");
+      const calcBtn = document.querySelector(".calcGuaXiang");
       const calcInput = document.querySelector(".calcInput");
       const arr = [
         '大安（木）',
@@ -131,7 +138,7 @@
         const divEl = document.querySelector('.result') || document.createElement("div");
         divEl.classList.add("result");
         divEl.textContent = result;
-        calcBtn.after(divEl);
+        calcBtn.parentElement.after(divEl);
       }
       calcBtn.addEventListener("click", () => {
         calc();
@@ -141,6 +148,103 @@
           calc();
         }
       })
+
+      // 计算农历
+      const lunarMonthMap = {
+        "正": 1,
+        "二": 2,
+        "三": 3,
+        "四": 4,
+        "五": 5,
+        "六": 6,
+        "七": 7,
+        "八": 8,
+        "九": 9,
+        "十": 10,
+        "冬": 11,
+        "腊": 12,
+      };
+      const hourMap = new Map([
+        [[23, 0], {name: '子时', i: 1}],
+        [[1, 2], {name: '丑时', i: 2}],
+        [[3, 4], {name: '寅时', i: 3}],
+        [[5, 6], {name: '卯时', i: 4}],
+        [[7, 8], {name: '辰时', i: 5}],
+        [[9, 10], {name: '巳时', i: 6}],
+        [[11, 12], {name: '午时', i: 7}],
+        [[13, 14], {name: '未时', i: 8}],
+        [[15, 16], {name: '申时', i: 9}],
+        [[17, 18], {name: '酉时', i: 10}],
+        [[19, 20], {name: '戌时', i: 11}],
+        [[21, 22], {name: '亥时', i: 12}],
+      ]);
+      const numMap = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
+      const timeEl = document.querySelector(".curTimeNum");
+      let month, day, hour;
+      function calcLunar() {
+        const date = new Date();
+        const lunarString = date.toLocaleString('zh-CN-u-ca-chinese');
+        const regex = /(\d{4})年([一二三四五六七八九十]+)月(\d{1,2}) (\d{2}):/;
+        const regResult = regex.exec(lunarString);
+        const lunarYear = regResult[1];
+        const yearName = getLunarYearName(Number(lunarYear));
+        const lunarMonth = regResult[2];
+        const lunarMonthNumber = lunarMonthMap[lunarMonth];
+        const lunarDay = regResult[3];
+        let lunarDayName = "";
+        // 格式化月份
+        if(Number(lunarDay) <= 10) {
+          lunarDayName = "初" + numMap[lunarDay];
+        } else if(Number(lunarDay) < 20) {
+          lunarDayName = "十";
+          lunarDayName += numMap[lunarDay[1]];
+        } else {
+          lunarDayName = numMap[lunarDay[0]] + "十";
+          if(lunarDay[1] !== '0') {
+            lunarDayName += numMap[lunarDay[1]];
+          }
+        }
+        // 获取时辰
+        const lunarHour = Number(regResult[4]);
+        let lunarHourInfo = {
+          name: "",
+          i: 0,
+        };
+        for(const [key, value] of hourMap) {
+          if(key.includes(lunarHour)) {
+            lunarHourInfo = {
+              name: value.name,
+              i: value.i,
+            }
+            break;
+          }
+        }
+        month = lunarMonthNumber;
+        day = lunarDay;
+        hour = lunarHourInfo.i;
+        const result = `农历${yearName}（${lunarYear}）年 ${lunarMonth}月${lunarDayName} ${lunarHourInfo.name}（${lunarHour}点）`;
+        timeEl.textContent = result;
+      }
+
+      // 计算年份对应的天干地支
+      const tianGan = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
+      const diZhi = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
+      function getLunarYearName(year) {
+        const ganIndex = (year - 4) % 10; // 天干索引
+        const zhiIndex = (year - 4) % 12; // 地支索引
+
+        const tianGanName = tianGan[ganIndex];
+        const diZhiName = diZhi[zhiIndex];
+
+        return tianGanName + diZhiName; // 返回天干地支组合
+      }
+      calcLunar();
+      
+      // 使用当前时间
+      const useCurTimeBtn = document.querySelector(".useCurTime");
+      useCurTimeBtn.addEventListener("click", () => {
+        calcInput.value = `${month} ${day} ${hour}`;
+      });
     </script>
   </body>
 </html>
