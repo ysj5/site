@@ -127,12 +127,20 @@
           return;
         }
         const len = arr.length;
-        const firstIndex = nums[0] % len - 1;
+        let firstIndex = nums[0] % len - 1;
+        if(firstIndex < 0) {
+          firstIndex = len - 1;
+        }
         const firstChar = arr[firstIndex];
-        const secondIndex = (firstIndex + nums[1] % len) % len - 1;
+        let secondIndex = (nums[0] + nums[1] - 1) % len - 1;
+        if(secondIndex < 0) {
+          secondIndex = len - 1;
+        }
         const secondChar = arr[secondIndex];
-        console.log(secondIndex, secondChar)
-        const thirdIndex = (secondIndex + nums[2] % len) % len - 1;
+        let thirdIndex = (nums[0] + nums[1] + nums[2] - 2) % len - 1;
+        if(thirdIndex < 0) {
+          thirdIndex = len - 1;
+        }
         const thirdChar = arr[thirdIndex];
         const result = `${firstChar} -> ${secondChar} -> ${thirdChar}`;
         const divEl = document.querySelector('.result') || document.createElement("div");
