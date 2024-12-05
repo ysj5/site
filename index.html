@@ -199,11 +199,12 @@
         const regResult = regex.exec(lunarString);
         const lunarYear = regResult[1];
         const yearName = getLunarYearName(Number(lunarYear));
+        // 格式化月份
         const lunarMonth = monthMap[regResult[2]] ? monthMap[regResult[2]] : regResult[2];
         const lunarMonthNumber = lunarMonthMap[lunarMonth];
         const lunarDay = regResult[3];
         let lunarDayName = "";
-        // 格式化月份
+        // 格式化日子
         if(Number(lunarDay) <= 10) {
           lunarDayName = "初" + numMap[lunarDay];
         } else if(Number(lunarDay) < 20) {
