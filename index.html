@@ -160,6 +160,7 @@
       // 计算农历
       const lunarMonthMap = {
         "正": 1,
+        "一": 1,
         "二": 2,
         "三": 3,
         "四": 4,
@@ -170,7 +171,9 @@
         "九": 9,
         "十": 10,
         "冬": 11,
+        "十一": 11,
         "腊": 12,
+        "十二": 12,
       };
       const hourMap = new Map([
         [[23, 0], {name: '子时', i: 1}],
@@ -187,16 +190,16 @@
         [[21, 22], {name: '亥时', i: 12}],
       ]);
       const numMap = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
+      const monthMap = {'十一': '冬', '十二': '腊', '一': '正'}
       const timeEl = document.querySelector(".curTimeNum");
       let month, day, hour;
       function calcLunar() {
-        const date = new Date();
-        const lunarString = date.toLocaleString('zh-CN-u-ca-chinese');
-        const regex = /(\d{4})年([一二三四五六七八九十]+)月(\d{1,2}) (\d{2}):/;
+        const lunarString = new Date().toLocaleString('zh-CN-u-ca-chinese');
+        const regex = /(\d{4})年(.*?)月(\d{1,2}) (\d{2}):/;
         const regResult = regex.exec(lunarString);
         const lunarYear = regResult[1];
         const yearName = getLunarYearName(Number(lunarYear));
-        const lunarMonth = regResult[2];
+        const lunarMonth = monthMap[regResult[2]] ? monthMap[regResult[2]] : regResult[2];
         const lunarMonthNumber = lunarMonthMap[lunarMonth];
         const lunarDay = regResult[3];
         let lunarDayName = "";
